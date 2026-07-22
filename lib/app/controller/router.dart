@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../auth/view/intro.dart';
+
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 enum RouterAuthState {
@@ -32,6 +34,14 @@ class AppRouter {
         name: Pages.splash.toPathName(),
         pageBuilder: (context, state) =>
             const MaterialPage(child: SplashPage()),
+      ),
+      GoRoute(
+        path: Pages.intro.toPath(),
+        name: Pages.intro.toPathName(),
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const IntroPage(),
+        ),
       ),
     ],
     redirect: (context, state) {
