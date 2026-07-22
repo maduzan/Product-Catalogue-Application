@@ -1,11 +1,13 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:Product_Catalogue_Application/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'app/controller/controller.dart';
+import 'app/controller/router.dart';
+import 'app/controller/states.dart';
 
 /// Returns the instance of the GetIt service locator.
 ///
@@ -37,10 +39,23 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder,
 }
 
 /// Sets up the application by registering necessary dependencies and initializing services.
-///
-/// The [environment] parameter specifies the application environment.
-/// It registers the Classes as singletons using the GetIt service locator.
-Future<void> setup({required AppEnvironment environment}) async {}
+Future<void> setup({required AppEnvironment environment}) async {
+  getIt
+    ..registerSingleton<AppSettings>(AppSettings(environment))
+    ..registerSingletonAsync<AppStates>(() async {
+      await Hive.openBox<bool>('states');
+      return AppStates();
+    })
+    ..registerSingletonWithDependencies(AppRouter.new, dependsOn: [AppStates])
+    ..registerSingletonAsync<ThemeServiceProvider>(() async {
+      await Hive.openBox<bool>('themeMode');
+      final isDark = Hive.box<bool>('themeMode').get('isDark') ?? false;
+      ThemeServiceProvider.setSystemUIOverlayStyle(isDark: isDark);
+      return ThemeServiceProvider(isDark: isDark);
+    });
+
+  await getIt.allReady();
+}
 
 /// Initializes Hive database for Flutter.
 /// This function must be called before using any Hive functionality.
