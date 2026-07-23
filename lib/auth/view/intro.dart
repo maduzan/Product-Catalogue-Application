@@ -1,6 +1,7 @@
 import 'package:Product_Catalogue_Application/app/widgets/logo.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/pages.dart';
 import '../../utils/utils.dart';
 
 class IntroPage extends StatefulWidget {
@@ -31,7 +32,11 @@ class _IntroPageState extends State<IntroPage> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           )),
           const Spacer(),
-          ElevatedButton(onPressed: () {}, child: Text('Sign In')),
+          ElevatedButton(
+              onPressed: () {
+                Pages.signIn.go(context);
+              },
+              child: Text('Sign In')),
           RelativeGap(mainAxisExtent: 0.05)
         ],
       ),

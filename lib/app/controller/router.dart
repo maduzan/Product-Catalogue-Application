@@ -4,8 +4,6 @@ import 'package:Product_Catalogue_Application/utils/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../auth/view/intro.dart';
 import '../../auth/view/view.dart';
 import '../../products/view/view.dart';
 
@@ -38,21 +36,22 @@ class AppRouter {
             const MaterialPage(child: SplashPage()),
       ),
       GoRoute(
-        path: Pages.intro.toPath(),
-        name: Pages.intro.toPathName(),
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const IntroPage(),
-        ),
-      ),
-      GoRoute(
-        path: Pages.signIn.toPath(),
-        name: Pages.signIn.toPathName(),
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const SignInPage(),
-        ),
-      ),
+          path: Pages.intro.toPath(),
+          name: Pages.intro.toPathName(),
+          pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: const IntroPage(),
+              ),
+          routes: [
+            GoRoute(
+              path: Pages.signIn.toPath(isSubRoute: true),
+              name: Pages.signIn.toPathName(),
+              pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: const SignInPage(),
+              ),
+            )
+          ]),
       GoRoute(
         path: Pages.ProductList.toPath(),
         name: Pages.ProductList.toPathName(),

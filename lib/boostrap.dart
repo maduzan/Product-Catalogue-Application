@@ -8,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'app/controller/controller.dart';
 import 'app/controller/router.dart';
 import 'app/controller/states.dart';
+import 'auth/controller/controller.dart';
 
 /// Returns the instance of the GetIt service locator.
 ///
@@ -45,6 +46,10 @@ Future<void> setup({required AppEnvironment environment}) async {
     ..registerSingletonAsync<AppStates>(() async {
       await Hive.openBox<bool>('states');
       return AppStates();
+    })
+    ..registerSingletonAsync<AuthService>(() async {
+      await Hive.openBox<String>(getIt<AppSettings>().sessionSecretKey);
+      return AuthService();
     })
     ..registerSingletonWithDependencies(AppRouter.new, dependsOn: [AppStates])
     ..registerSingletonAsync<ThemeServiceProvider>(() async {
