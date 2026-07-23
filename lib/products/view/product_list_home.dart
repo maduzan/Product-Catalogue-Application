@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../app/controller/controller.dart';
 import '../../auth/controller/controller.dart';
 
 class ProductListHome extends StatefulWidget {
@@ -20,6 +21,15 @@ class _ProductListHomeState extends State<ProductListHome> {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
+          ),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Switch(
+            value: GetIt.instance<ThemeServiceProvider>().isDark,
+            onChanged: (value) {
+              GetIt.instance<ThemeServiceProvider>().toggleTheme();
+            },
           ),
         ),
         actions: [
