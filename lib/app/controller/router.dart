@@ -53,8 +53,8 @@ class AppRouter {
             )
           ]),
       GoRoute(
-        path: Pages.ProductList.toPath(),
-        name: Pages.ProductList.toPathName(),
+        path: Pages.home.toPath(),
+        name: Pages.home.toPathName(),
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const ProductListHome(),

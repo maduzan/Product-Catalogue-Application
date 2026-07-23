@@ -51,6 +51,22 @@ class _SignInPageState extends State<SignInPage> {
     super.dispose();
   }
 
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+
+  void onPressedVerifyAccountButton() {
+    FocusScope.of(context).unfocus();
+    if (_formKey.currentState?.validate() ?? false) {
+      authService.login(
+        _emailController.text.trim(),
+        _passwordController.text,
+      );
+    } else {
+      setState(() {
+        _autovalidateMode = AutovalidateMode.onUserInteraction;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<AuthState>(
@@ -60,7 +76,7 @@ class _SignInPageState extends State<SignInPage> {
           absorbing: snapshot.data is AuthLoading,
           child: Scaffold(
             appBar: AppBar(
-              title: Text(
+              title: const Text(
                 'Sign In',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -70,28 +86,53 @@ class _SignInPageState extends State<SignInPage> {
             ),
             body: Form(
               key: _formKey,
+              autovalidateMode: _autovalidateMode,
               child: ExtendedColumn(
                 children: [
+                  const FixedGap(mainAxisExtent: 16),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 48, vertical: 16),
-                    child: AppLogo(imageWidth: 118, imageHeight: 120),
-                  ),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  FixedGap(mainAxisExtent: 16),
-                  TextField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
-                    ),
+                    child: AppLogo(imageWidth: 200, imageHeight: 120),
                   ),
                   const Spacer(),
+                  const Text('Enter Your Email'),
+                  const FixedGap(mainAxisExtent: 4),
+                  EmailTextFormField(
+                    controller: _emailController,
+                    autovalidateMode: _autovalidateMode,
+                  ),
+                  const FixedGap(mainAxisExtent: 24),
+                  const Text('Enter Your Password'),
+                  const FixedGap(mainAxisExtent: 4),
+                  PasswordTextFormField(
+                    controller: _passwordController,
+                    autovalidateMode: _autovalidateMode,
+                  ),
+                  const FixedGap(mainAxisExtent: 16),
+                  const Spacer(),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: onPressedVerifyAccountButton,
+                      child: Builder(
+                        builder: (context) {
+                          if (snapshot.data is AuthLoading) {
+                            return SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary
+                                        .withValues(alpha: 0.6)),
+                              ),
+                            );
+                          }
+                          return const Text('Sign In');
+                        },
+                      ),
+                    ),
+                  ),
                   const RelativeGap(mainAxisExtent: 0.05),
                 ],
               ),

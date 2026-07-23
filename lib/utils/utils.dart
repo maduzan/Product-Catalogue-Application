@@ -5,3 +5,4 @@ export './fixed_gap.dart';
 export './network/network.dart';
 export './assets/assets.dart';
 export './common_dialog.dart';
+export './auth_form_field.dart';
