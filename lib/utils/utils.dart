@@ -6,3 +6,5 @@ export './network/network.dart';
 export './assets/assets.dart';
 export './common_dialog.dart';
 export './auth_form_field.dart';
+export './common_search_bar.dart';
+
