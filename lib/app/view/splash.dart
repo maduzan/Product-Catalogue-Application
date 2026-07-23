@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_it/get_it.dart';
 
+import '../widgets/widgets.dart';
+
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -36,10 +38,10 @@ class _SplashPageState extends State<SplashPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Padding(
-            //   padding: EdgeInsets.all(16),
-            //   child: AppLogo(aspectRatio: 1.5),
-            // ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: AppLogo(imageWidth: 197, imageHeight: 200),
+            ),
             SizedBox(height: 16),
             SizedBox(
               width: 24,

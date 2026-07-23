@@ -22,12 +22,13 @@ class ThemeServiceProvider with ChangeNotifier {
   }
 
   /// **Important**: Don't make colors public
-  final Color _primaryColor = const Color(0xFF127592);
+  final Color _primaryColor = const Color.fromARGB(255, 134, 185, 46);
   final Color _secondaryColor = const Color(0xFF7FD0D3);
-  final Color _lightSurfaceColor = Colors.white;
-  final Color _darkSurfaceColor = const Color(0xFF023047);
-  final Color _lightBackgroundColor = const Color(0xFFF7F7F7);
-  final Color _darkBackgroundColor = const Color(0xFF000000);
+  final Color _lightSurfaceColor = const Color.fromARGB(255, 208, 207, 207);
+  final Color _darkSurfaceColor = const Color.fromRGBO(18, 19, 23, 1);
+  final Color _lightBackgroundColor = const Color.fromARGB(255, 208, 207, 207);
+  final Color _darkBackgroundColor = const Color.fromRGBO(18, 19, 23, 1);
+
   final Color _errorColor = const Color(0xFFD32F2F);
 
   Color get shimmersColor => _primaryColor.withValues(alpha: 0.24);
