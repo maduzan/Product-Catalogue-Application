@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:Product_Catalogue_Application/auth/controller/controller.dart';
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 
@@ -30,15 +32,17 @@ class AuthService extends AuthRepository {
   Future<void> login(String email, String password) async {
     _authStateSubject.add(AuthLoading());
     try {
-      final request = LogInRequestModel(
-        email: email,
-        password: password,
+      await Future<void>.delayed(const Duration(milliseconds: 500));
+      final newSession = Session(
+        userId: '1',
+        accessToken:
+            'dummy_access_token_${DateTime.now().millisecondsSinceEpoch}',
+        createdAt: DateTime.now(),
+        isEmailVerified: true,
+        isProfileCompleted: true,
       );
 
-      final profile = await logIn(request);
-      final newSession = Session.fromJson(profile.toJson());
-
-      /// Save the session to the local storage
+      /// Save the session to local storage
       await _saveSession(newSession);
 
       /// Emit the success state with the new session
@@ -50,5 +54,66 @@ class AuthService extends AuthRepository {
 
   Future<void> _saveSession(Session session) async {
     await _storage.put('session', jsonEncode(session.toJson()));
+  }
+
+  Future<Session?> _getSession() async {
+    final session = _storage.get('session');
+    if (session == null) {
+      return null;
+    }
+    return Session.fromJson(jsonDecode(session) as Map<String, dynamic>);
+  }
+
+  Future<void> _deleteSession() async {
+    await _storage.delete('session');
+  }
+
+  Future<Session> getCurrentUser({required String token}) async {
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    return Session(
+      userId: '1',
+      accessToken: token.isNotEmpty ? token : 'dummy_access_token',
+      createdAt: DateTime.now(),
+      isEmailVerified: true,
+      isProfileCompleted: true,
+    );
+  }
+
+  Future<void> refreshSession() async {
+    var session = await _getSession();
+    if (session != null) {
+      try {
+        final response = await getCurrentUser(token: session.accessToken);
+        session = session
+            .syncPreserveAccessToken(Session.fromJson(response.toJson()));
+        _authStateSubject.add(AuthSuccess(session: session));
+
+        /// We need to save the session again to trigger the session change listener in the [App] in app.dart
+        await _saveSession(session);
+      } catch (_) {
+        /// If an error occurs while syncing the user session, we log out the user
+        log('Error syncing user session', name: 'AuthService');
+        await _deleteSession();
+        _authStateSubject.add(AuthInitial());
+      }
+    } else {
+      _authStateSubject.add(AuthInitial());
+    }
+  }
+
+  Future<void> logout() async {
+    _authStateSubject.add(AuthLoading());
+
+    final session = await _getSession();
+    if (session != null) {
+      await logOut(token: session.accessToken);
+    }
+    await _deleteSession();
+
+    _authStateSubject.add(AuthLogout());
+  }
+
+  Future<void> logOut({required String token}) async {
+    await Future<void>.delayed(const Duration(milliseconds: 300));
   }
 }

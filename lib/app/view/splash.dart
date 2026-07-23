@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../auth/controller/controller.dart';
 import '../widgets/widgets.dart';
 
 class SplashPage extends StatefulWidget {
@@ -25,6 +26,7 @@ class _SplashPageState extends State<SplashPage> {
     FlutterNativeSplash.remove();
     // Simulate initial loading (e.g., config, database)
     await Future.delayed(const Duration(seconds: 1), () {});
+    await GetIt.instance<AuthService>().refreshSession();
 
     if (mounted) {
       GetIt.instance<AppStates>().isInitialized = true;

@@ -40,4 +40,14 @@ class Session {
   String toString() {
     return 'Session(userId: $userId, accessToken: $accessToken, createdAt: $createdAt, isEmailVerified: $isEmailVerified, isProfileCompleted: $isProfileCompleted)';
   }
+
+  Session syncPreserveAccessToken(Session session) {
+    return Session(
+      userId: session.userId,
+      accessToken: accessToken,
+      createdAt: session.createdAt,
+      isEmailVerified: session.isEmailVerified,
+      isProfileCompleted: session.isProfileCompleted,
+    );
+  }
 }

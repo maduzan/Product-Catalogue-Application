@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+
+import '../../auth/controller/controller.dart';
 
 class ProductListHome extends StatefulWidget {
   const ProductListHome({super.key});
@@ -19,6 +22,16 @@ class _ProductListHomeState extends State<ProductListHome> {
             fontSize: 20,
           ),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                GetIt.instance<AuthService>().logout();
+              },
+              icon: Icon(
+                Icons.logout,
+                color: Theme.of(context).colorScheme.error,
+              )),
+        ],
       ),
       body: Column(
         children: [],
