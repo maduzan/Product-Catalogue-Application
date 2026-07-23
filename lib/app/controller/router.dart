@@ -6,6 +6,8 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../auth/view/intro.dart';
+import '../../auth/view/view.dart';
+import '../../products/view/view.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -41,6 +43,22 @@ class AppRouter {
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const IntroPage(),
+        ),
+      ),
+      GoRoute(
+        path: Pages.signIn.toPath(),
+        name: Pages.signIn.toPathName(),
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const SignInPage(),
+        ),
+      ),
+      GoRoute(
+        path: Pages.ProductList.toPath(),
+        name: Pages.ProductList.toPathName(),
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const ProductListHome(),
         ),
       ),
     ],

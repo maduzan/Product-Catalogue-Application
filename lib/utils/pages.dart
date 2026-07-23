@@ -2,14 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recase/recase.dart';
 
-enum Pages {
-  splash,
-  intro,
-  signIn,
-  signUp,
-  home,
-  detail,
-}
+enum Pages { splash, intro, signIn, home, productDetails, ProductList }
 
 extension PagesExtension on Pages {
   String toPath(
