@@ -9,6 +9,7 @@ import 'app/controller/controller.dart';
 import 'app/controller/router.dart';
 import 'app/controller/states.dart';
 import 'auth/controller/controller.dart';
+import 'products/controller/controller.dart';
 
 /// Returns the instance of the GetIt service locator.
 ///
@@ -52,6 +53,10 @@ Future<void> setup({required AppEnvironment environment}) async {
       return AuthService();
     })
     ..registerSingletonWithDependencies(AppRouter.new, dependsOn: [AppStates])
+    ..registerLazySingleton<ProductsRepository>(ProductsRepository.new)
+    ..registerSingletonWithDependencies<ProductController>(
+        ProductController.new,
+        dependsOn: [ProductsRepository])
     ..registerSingletonAsync<ThemeServiceProvider>(() async {
       await Hive.openBox<bool>('themeMode');
       final isDark = Hive.box<bool>('themeMode').get('isDark') ?? false;

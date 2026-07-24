@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../auth/model/model.dart';
+import '../../products/products.dart';
 import '../../utils/utils.dart';
 import '../controller/controller.dart';
 import '../controller/router.dart';
@@ -25,7 +26,6 @@ class _StarterAppState extends State<StarterApp> {
   final AppStates _appStates = GetIt.instance<AppStates>();
   final ThemeServiceProvider _themeServiceProvider =
       GetIt.instance<ThemeServiceProvider>();
-  final AppRouter _appRouter = GetIt.instance<AppRouter>();
 
   @override
   void initState() {
@@ -77,6 +77,8 @@ class _StarterAppState extends State<StarterApp> {
         ChangeNotifierProvider(
             create: (_) => GetIt.instance<ThemeServiceProvider>()),
         ChangeNotifierProvider(create: (_) => GetIt.instance<AppStates>()),
+        ChangeNotifierProvider(
+            create: (_) => GetIt.instance<ProductController>()),
       ],
       child: Builder(
         builder: (context) {
