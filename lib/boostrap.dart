@@ -53,7 +53,10 @@ Future<void> setup({required AppEnvironment environment}) async {
       return AuthService();
     })
     ..registerSingletonWithDependencies(AppRouter.new, dependsOn: [AppStates])
-    ..registerLazySingleton<ProductsRepository>(ProductsRepository.new)
+    ..registerSingletonAsync<ProductsRepository>(() async {
+      await Hive.openBox<String>(getIt<AppSettings>().sessionSecretKey);
+      return ProductsRepository();
+    })
     ..registerSingletonWithDependencies<ProductController>(
         ProductController.new,
         dependsOn: [ProductsRepository])
