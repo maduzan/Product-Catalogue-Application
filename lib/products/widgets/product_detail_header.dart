@@ -29,6 +29,8 @@ class ProductDetailHeader extends StatelessWidget {
           ),
           child: Text(
             category.toUpperCase(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: colorScheme.onPrimaryContainer,
               fontSize: 11,
@@ -46,6 +48,8 @@ class ProductDetailHeader extends StatelessWidget {
             Expanded(
               child: Text(
                 name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   height: 1.2,
@@ -55,6 +59,8 @@ class ProductDetailHeader extends StatelessWidget {
             const SizedBox(width: 16),
             Text(
               '\$${price.toStringAsFixed(2)}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: theme.textTheme.headlineSmall?.copyWith(
                 color: colorScheme.primary,
                 fontWeight: FontWeight.w800,

@@ -17,6 +17,8 @@ class ProductDetailDescription extends StatelessWidget {
       children: [
         Text(
           'Description',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -26,6 +28,7 @@ class ProductDetailDescription extends StatelessWidget {
           description.isNotEmpty
               ? description
               : 'No product description available.',
+          overflow: TextOverflow.fade,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
             height: 1.5,

@@ -33,6 +33,8 @@ class _ProductListHomeState extends State<ProductListHome> {
       appBar: AppBar(
         title: const Text(
           'Product Catalogue',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,

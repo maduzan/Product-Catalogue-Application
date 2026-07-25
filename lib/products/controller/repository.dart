@@ -118,10 +118,10 @@ class ProductsRepository extends ApiClient {
   }
 
   /// Dummy API call to toggle product favourite status and persist in Hive.
-  Future<bool> toggleFavouriteApi(String productId, bool currentFavState) async {
+  Future<bool> toggleFavouriteApi(
+      String productId, bool currentFavState) async {
     final newFavState = !currentFavState;
 
-    // Simulate dummy API request delay for toggling favourite
     await Future<void>.delayed(const Duration(milliseconds: 300));
 
     final box = Hive.isBoxOpen(_favouritesBoxName)
@@ -137,7 +137,6 @@ class ProductsRepository extends ApiClient {
     final products = await getProducts();
     final index = products.indexWhere((p) => p.id == productId);
     if (index != -1) {
-      // Simulate network delay for GET detail API call
       await Future<void>.delayed(const Duration(milliseconds: 600));
       return products[index];
     } else {
