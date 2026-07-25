@@ -55,6 +55,7 @@ Future<void> setup({required AppEnvironment environment}) async {
     ..registerSingletonWithDependencies(AppRouter.new, dependsOn: [AppStates])
     ..registerSingletonAsync<ProductsRepository>(() async {
       await Hive.openBox<String>(getIt<AppSettings>().sessionSecretKey);
+      await Hive.openBox<bool>('favourites');
       return ProductsRepository();
     })
     ..registerSingletonWithDependencies<ProductController>(

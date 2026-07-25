@@ -4,6 +4,7 @@ class ProductModel {
   final double price;
   final String category;
   final String imageUrl;
+  final String description;
   final bool isFavourite;
 
   const ProductModel({
@@ -12,6 +13,7 @@ class ProductModel {
     required this.price,
     required this.category,
     required this.imageUrl,
+    this.description = '',
     this.isFavourite = false,
   });
 
@@ -22,6 +24,7 @@ class ProductModel {
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
       category: json['category'] as String? ?? '',
       imageUrl: json['imageUrl'] as String? ?? '',
+      description: json['description'] as String? ?? '',
       isFavourite: json['isFavourite'] as bool? ?? false,
     );
   }
@@ -33,6 +36,7 @@ class ProductModel {
       'price': price,
       'category': category,
       'imageUrl': imageUrl,
+      'description': description,
       'isFavourite': isFavourite,
     };
   }
@@ -43,6 +47,7 @@ class ProductModel {
     double? price,
     String? category,
     String? imageUrl,
+    String? description,
     bool? isFavourite,
   }) {
     return ProductModel(
@@ -51,6 +56,7 @@ class ProductModel {
       price: price ?? this.price,
       category: category ?? this.category,
       imageUrl: imageUrl ?? this.imageUrl,
+      description: description ?? this.description,
       isFavourite: isFavourite ?? this.isFavourite,
     );
   }
