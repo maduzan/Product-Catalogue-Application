@@ -28,9 +28,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductController>(
-      builder: (context, controller, child) {
-        final detailState = controller.detailState;
+    return Selector<ProductController, ProductDetailState>(
+      selector: (_, controller) => controller.detailState,
+      builder: (context, detailState, child) {
         if (detailState is ProductDetailLoading ||
             detailState is ProductDetailInitial) {
           return Scaffold(
@@ -38,6 +38,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             body: const Center(child: CircularProgressIndicator()),
           );
         }
+
         if (detailState is ProductDetailFailed) {
           return Scaffold(
             appBar: AppBar(),
@@ -60,8 +61,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton.icon(
-                    onPressed: () =>
-                        controller.fetchProductDetails(widget.productId),
+                    onPressed: () => context
+                        .read<ProductController>()
+                        .fetchProductDetails(widget.productId),
                     icon: const Icon(Icons.refresh),
                     label: const Text('Retry'),
                   ),
@@ -70,6 +72,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
           );
         }
+
         if (detailState is ProductDetailSuccess) {
           final product = detailState.product;
 
@@ -112,7 +115,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             floatingActionButton: ProductDetailFavouriteButton(
               isFavourite: product.isFavourite,
               onPressed: () {
-                controller.toggleFavourite(product.id);
+                context.read<ProductController>().toggleFavourite(product.id);
               },
             ),
           );

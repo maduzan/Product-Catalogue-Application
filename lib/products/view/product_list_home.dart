@@ -61,10 +61,9 @@ class _ProductListHomeState extends State<ProductListHome> {
           ),
         ],
       ),
-      body: Consumer<ProductController>(
-        builder: (context, controller, child) {
-          final state = controller.state;
-
+      body: Selector<ProductController, ProductState>(
+        selector: (_, controller) => controller.state,
+        builder: (context, state, child) {
           if (state is ProductLoading || state is ProductInitial) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -90,7 +89,8 @@ class _ProductListHomeState extends State<ProductListHome> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
-                    onPressed: () => controller.fetchProducts(),
+                    onPressed: () =>
+                        context.read<ProductController>().fetchProducts(),
                     icon: const Icon(Icons.refresh),
                     label: const Text('Try Again'),
                   ),
@@ -109,10 +109,10 @@ class _ProductListHomeState extends State<ProductListHome> {
                   child: CommonSearchBar(
                     hintText: 'Search products by name or category...',
                     onChanged: (query) {
-                      controller.searchProducts(query);
+                      context.read<ProductController>().searchProducts(query);
                     },
                     onSubmitted: (query) {
-                      controller.searchProducts(query);
+                      context.read<ProductController>().searchProducts(query);
                     },
                   ),
                 ),
@@ -134,7 +134,8 @@ class _ProductListHomeState extends State<ProductListHome> {
                           ),
                         )
                       : RefreshIndicator(
-                          onRefresh: () => controller.fetchProducts(),
+                          onRefresh: () =>
+                              context.read<ProductController>().fetchProducts(),
                           child: GridView.builder(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 8),
@@ -151,7 +152,9 @@ class _ProductListHomeState extends State<ProductListHome> {
                               return ProductCard(
                                 product: product,
                                 onFavouriteToggle: () {
-                                  controller.toggleFavourite(product.id);
+                                  context
+                                      .read<ProductController>()
+                                      .toggleFavourite(product.id);
                                 },
                               );
                             },
