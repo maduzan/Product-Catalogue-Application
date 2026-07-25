@@ -95,7 +95,7 @@ lib/
 │       ├── product_card.dart                # Grid card widget
 │       ├── product_detail_image.dart        # Hero image widget
 │       ├── product_detail_header.dart       # Name, category, price widget
-│       ├── product_detail_description.dart. # Description section widget
+│       ├── product_detail_description.dart  # Description section widget
 │       └── product_detail_favourite_button.dart # FAB favourite toggle
 │
 ├── utils/                      # Shared utilities

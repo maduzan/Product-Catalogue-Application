@@ -4,5 +4,6 @@ import 'app/view/view.dart';
 import 'utils/utils.dart';
 
 void main() {
-  bootstrap(() => const StarterApp(), environment: AppEnvironment.production);
+  bootstrap(() => const ProductCatalogueApp(),
+      environment: AppEnvironment.production);
 }

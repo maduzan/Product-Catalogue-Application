@@ -13,14 +13,14 @@ import '../controller/controller.dart';
 import '../controller/router.dart';
 import '../controller/states.dart';
 
-class StarterApp extends StatefulWidget {
-  const StarterApp({super.key});
+class ProductCatalogueApp extends StatefulWidget {
+  const ProductCatalogueApp({super.key});
 
   @override
-  State<StarterApp> createState() => _StarterAppState();
+  State<ProductCatalogueApp> createState() => _ProductCatalogueAppState();
 }
 
-class _StarterAppState extends State<StarterApp> {
+class _ProductCatalogueAppState extends State<ProductCatalogueApp> {
   late StreamSubscription<BoxEvent> _authStateSubscription;
 
   final AppStates _appStates = GetIt.instance<AppStates>();
@@ -87,6 +87,7 @@ class _StarterAppState extends State<StarterApp> {
             minTextAdapt: true,
             splitScreenMode: true,
             child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
               onGenerateTitle: (context) => 'Product Catalogue',
               theme: context.watch<ThemeServiceProvider>().lightTheme,
               darkTheme: context.watch<ThemeServiceProvider>().darkTheme,
