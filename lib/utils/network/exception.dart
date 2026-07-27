@@ -33,14 +33,7 @@ class ApiError implements Exception {
 }
 
 /// Handles the error and converts it into an [ApiError] object.
-///
-/// If the error is a [DioException], it checks if the response data is a map.
-/// If it is, it throws an [ApiError] object by parsing the response data.
-/// If it's not a map, it throws an [ApiError] object with a default message and status code.
-///
-/// If the error is not a [DioException], it throws an [ApiError] object with the error message and status code.
-///
-/// If any exception occurs during the error handling process, it throws an [ApiError] object with the exception message and status code.
+
 T onError<T>(Exception e) {
   try {
     if (e is DioException) {

@@ -7,7 +7,6 @@ class AuthRepository extends ApiClient {
   AuthRepository() : super();
 
   /// Logs in a user with the provided [request] data.
-  /// Returns a [Future] that completes with a [UserProfileWithToken] object if the login is successful.
   /// Throws an [Exception] if the login fails.
   Future<Session> logIn(LogInRequestModel request) async {
     try {

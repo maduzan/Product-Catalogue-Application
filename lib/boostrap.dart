@@ -12,17 +12,10 @@ import 'auth/controller/controller.dart';
 import 'products/controller/controller.dart';
 
 /// Returns the instance of the GetIt service locator.
-///
-/// The GetIt service locator is a singleton class that provides a convenient way to access
-/// and manage dependencies in your application. This getter method returns the instance
-/// of the GetIt service locator.
+
 GetIt get getIt => GetIt.instance;
 
 /// Boots up the application by initializing necessary components and running the provided builder function.
-///
-/// The [builder] function is responsible for creating the root widget of the application.
-/// The [environment] parameter specifies the environment in which the application is running.
-/// This function sets up error handling, initializes Flutter bindings, and registers singletons for various services.
 Future<void> bootstrap(FutureOr<Widget> Function() builder,
     {required AppEnvironment environment}) async {
   FlutterError.onError = (details) {

@@ -21,14 +21,7 @@ class AuthService extends AuthRepository {
   Stream<AuthState> get onAuthStateChanges => _authStateSubject.stream;
 
   /// Logs in the user with the provided [email] and [password].
-  ///
-  /// This method sets the authentication state to [AuthLoading] and then attempts to log in the user using the provided credentials.
-  /// It retrieves the device platform and device ID from the [AppSettings] instance using [GetIt] and creates a [LogInRequestModel] with the email, password, device ID, and device platform.
-  /// The method then calls the [logIn] function to send the login request and awaits the response.
-  /// If the login is successful, the session is saved using [_saveSession] and the authentication state is set to [AuthSuccess] with the session response.
-  /// If an error occurs during the login process, the authentication state is set to [AuthFailed] with the error message.
-  ///
-  /// Throws an exception if any error occurs during the login process.
+
   Future<void> login(String email, String password) async {
     _authStateSubject.add(AuthLoading());
     try {

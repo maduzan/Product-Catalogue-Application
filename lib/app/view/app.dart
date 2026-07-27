@@ -48,7 +48,6 @@ class _ProductCatalogueAppState extends State<ProductCatalogueApp> {
     super.initState();
   }
 
-  /// **Note**: In the future, we'll also use this function to clear saved user cache related data from other services.
   void onAuthStateChanged(BoxEvent event) {
     log('onAuthStateChanged: ${event.value}', name: 'quicky_cafeAppState');
     if (event.value != null && event.value is String) {
